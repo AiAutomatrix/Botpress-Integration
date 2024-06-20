@@ -10,8 +10,6 @@ export default new IntegrationDefinition({
   configuration: {
     schema: z.object({
       webhookUrl: z.string().describe('The url to post the bot answers to.'),
-      Publishablekey: z.string(),
-      Secretkey: z.string(),
     }),
   },
   events: {
