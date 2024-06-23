@@ -1,7 +1,7 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import { integrationName } from './package.json';
 import z from 'zod';
-import { openFeedDialog } from './auto-media-post/facebook/facebookShare.ts'; 
+import { openFeedDialog } from './auto-media-post/facebook/facebookShare'; // Adjusted import path as needed
 
 const integrationDefinition = new IntegrationDefinition({
   name: integrationName,
@@ -10,7 +10,7 @@ const integrationDefinition = new IntegrationDefinition({
   icon: 'icon.svg',
   configuration: {
     schema: z.object({
-      webhookUrl: z.string().describe('The URL to post the bot answers to.'),
+      webhookUrl: z.string().description('The URL to post the bot answers to.'),
     }),
   },
   events: {
@@ -20,9 +20,14 @@ const integrationDefinition = new IntegrationDefinition({
   },
   actions: {
     facebookShare: {
-      async handler() {
-        await openFeedDialog();
-        // Additional logic can be added here if needed
+      async handler(event, action, logger) {
+        try {
+          await openFeedDialog(); // Call your function to open Facebook Feed Dialog
+          // Additional logic can be added here if needed
+        } catch (error) {
+          logger.error('Failed to open Facebook Feed Dialog', error);
+          throw error; // Rethrow the error to handle it further up the call stack if necessary
+        }
       },
       description: 'Open Facebook Feed Dialog for sharing content.',
     },
