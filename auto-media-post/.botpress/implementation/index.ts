@@ -40,7 +40,7 @@ type TIntegration = {
   channels: channels.Channels
   events: events.Events
   states: states.States
-  user: { "tags": { "id": { "title": "User ID", "description": "User ID from Stripe" } }, "creation": { "enabled": false, "requiredTags": [] } }
+  user: { "tags": {}, "creation": { "enabled": false, "requiredTags": [] } }
 }
 
 export type IntegrationProps = sdk.IntegrationProps<TIntegration>

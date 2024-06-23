@@ -13,6 +13,7 @@
     "@botpress/client": "0.23.0",
     "@botpress/sdk": "0.8.28",
     "axios": "^1.7.2",
+    "window": "^4.2.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {
