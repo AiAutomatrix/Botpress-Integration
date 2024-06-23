@@ -1,7 +1,7 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import { integrationName } from './package.json';
 import z from 'zod';
-import { openFeedDialog } from './auto-media-post/facebook/facebookShare'; // Adjusted import path as needed
+import { openFeedDialog } from './auto-media-post/src/facebook'; // Adjusted import path as needed
 
 const integrationDefinition = new IntegrationDefinition({
   name: integrationName,
