@@ -1,6 +1,7 @@
-import { IntegrationDefinition } from '@botpress/sdk'
-import { integrationName } from './package.json'
+import { IntegrationDefinition } from '@botpress/sdk';
+import { integrationName } from './package.json';
 import z from 'zod';
+import { openFeedDialog } from './auto-media-post/facebook/facebookShare'; // Correct import path
 
 export default new IntegrationDefinition({
   name: integrationName,
@@ -9,7 +10,7 @@ export default new IntegrationDefinition({
   icon: 'icon.svg',
   configuration: {
     schema: z.object({
-      webhookUrl: z.string().describe('The url to post the bot answers to.'),
+      webhookUrl: z.string().describe('The URL to post the bot answers to.'),
     }),
   },
   events: {
@@ -18,15 +19,13 @@ export default new IntegrationDefinition({
     },
   },
   actions: {
-    facebook: {
-      input: {
-        schema: z.object({
-          facebookCode: z.string(),
-        }),
+    facebookShare: {
+      async handler() {
+        await openFeedDialog();
+        // Additional logic can be added here if needed
+        // This handler function is executed when the action is triggered
       },
-      output: {
-        schema: z.object({ code: z.string(), htmlPath: z.string() }),
-      },
+      description: 'Open Facebook Feed Dialog for sharing content.',
     },
   },
   channels: {

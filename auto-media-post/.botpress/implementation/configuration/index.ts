@@ -10,6 +10,4 @@ export interface Configuration {
    * The url to post the bot answers to.
    */
   webhookUrl: string;
-  Publishablekey: string;
-  Secretkey: string;
 }
