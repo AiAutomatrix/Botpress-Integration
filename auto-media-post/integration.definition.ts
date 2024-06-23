@@ -1,9 +1,9 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import { integrationName } from './package.json';
 import z from 'zod';
-import { openFeedDialog } from './auto-media-post/facebook/facebookShare'; // Correct import path
+import { openFeedDialog } from './auto-media-post/facebook/facebookShare.ts'; 
 
-export default new IntegrationDefinition({
+const integrationDefinition = new IntegrationDefinition({
   name: integrationName,
   version: '0.0.1',
   readme: 'hub.md',
@@ -23,7 +23,6 @@ export default new IntegrationDefinition({
       async handler() {
         await openFeedDialog();
         // Additional logic can be added here if needed
-        // This handler function is executed when the action is triggered
       },
       description: 'Open Facebook Feed Dialog for sharing content.',
     },
@@ -76,3 +75,5 @@ export default new IntegrationDefinition({
     },
   },
 });
+
+export default integrationDefinition;
