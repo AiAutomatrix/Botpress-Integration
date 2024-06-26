@@ -47,6 +47,40 @@ export default new bp.Integration({
       input = input || 'World'
       return { message: `This is your LinkedIn post "${input}"` }
     },
+    createFacebookPost: async (props) => {
+      try {
+        const { message, link, scheduledTime } = props.input;
+
+        // Prepare the request payload
+        const payload = {
+          message,
+          link,
+          published: scheduledTime ? false : true,
+        };
+
+        if (scheduledTime) {
+          payload['scheduled_publish_time'] = scheduledTime;
+        }
+
+        // Make the API call to create the post
+        const response = await sdk.http.post(`https://graph.facebook.com/v20.0/${PAGE_ID}/feed`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: payload,
+          params: {
+            access_token: PAGE_ACCESS_TOKEN,
+          },
+        });
+
+        // Return the post ID upon successful creation
+        return { postId: response.data.id };
+      } catch (error) {
+        // Handle any errors that occur during the API call
+        console.error('Error creating Facebook post:', error);
+        throw new sdk.RuntimeError('Failed to create Facebook post');
+      }
+    },
   },
   
   channels: {},

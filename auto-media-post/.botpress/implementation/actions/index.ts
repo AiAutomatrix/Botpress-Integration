@@ -7,9 +7,12 @@ import * as instaAction from "./instaAction/index";
 export * as instaAction from "./instaAction/index";
 import * as linkedInAction from "./linkedInAction/index";
 export * as linkedInAction from "./linkedInAction/index";
+import * as createFacebookPost from "./createFacebookPost/index";
+export * as createFacebookPost from "./createFacebookPost/index";
 
 export type Actions = {
   "facebookAction": facebookAction.FacebookAction;
   "instaAction": instaAction.InstaAction;
   "linkedInAction": linkedInAction.LinkedInAction;
+  "createFacebookPost": createFacebookPost.CreateFacebookPost;
 }

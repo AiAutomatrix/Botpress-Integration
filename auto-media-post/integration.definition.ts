@@ -9,7 +9,7 @@ export default new IntegrationDefinition({
   actions: {
     facebookAction: {
       title: 'Facebook',
-      description: 'A simple facebook action',
+      description: 'A simple Facebook action',
       input: {
         schema: z.object({
           input: z.string().optional(),
@@ -23,7 +23,7 @@ export default new IntegrationDefinition({
     },
     instaAction: {
       title: 'Instagram',
-      description: 'A simple instagram action',
+      description: 'A simple Instagram action',
       input: {
         schema: z.object({
           input: z.string().optional(),
@@ -49,5 +49,21 @@ export default new IntegrationDefinition({
         }),
       },
     },
+    createFacebookPost: {
+      title: 'Create Facebook Post',
+      description: 'Create a post on Facebook Page',
+      input: {
+        schema: z.object({
+          message: z.string(),
+          link: z.string().optional(),
+          scheduledTime: z.string().optional(),
+        }),
+      },
+      output: {
+        schema: z.object({
+          postId: z.string(),
+        }),
+      },
+    },
   },
-})
+});
