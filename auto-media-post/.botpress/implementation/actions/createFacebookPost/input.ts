@@ -7,6 +7,5 @@
 
 export interface Input {
   message: string;
-  link?: string;
-  scheduledTime?: string;
+  mediaUrl: string;
 }

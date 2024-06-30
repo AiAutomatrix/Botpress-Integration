@@ -6,6 +6,13 @@ export default new IntegrationDefinition({
   version: '0.0.1',
   readme: 'hub.md',
   icon: 'icon.svg',
+   // This is where we define the configuration schema for our integration.
+   configuration: {
+    schema: z.object({
+        accessToken: z.string(), // Defines that apiKey should be a string.
+        pageId: z.string(), // Defines that teamId should be a string.
+    })
+},
   actions: {
     facebookAction: {
       title: 'Facebook',
@@ -50,13 +57,13 @@ export default new IntegrationDefinition({
       },
     },
     createFacebookPost: {
-      title: 'Create Facebook Post',
-      description: 'Create a post on Facebook Page',
+      title: 'Facebook Media Post',
+      description: 'Create a media post on Facebook Page using access tokens',
       input: {
         schema: z.object({
           message: z.string(),
-          link: z.string().optional(),
-          scheduledTime: z.string().optional(),
+          mediaUrl: z.string().url(),
+          
         }),
       },
       output: {

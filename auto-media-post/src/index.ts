@@ -1,25 +1,26 @@
 import * as sdk from '@botpress/sdk'
 import * as bp from '.botpress'
+import axios from 'axios'
 
 export default new bp.Integration({
   register: async () => {
     /**
      * This is called when a bot installs the integration.
-     * You should use this handler to instanciate ressources in the external service and ensure that the configuration is valid.
+     * You should use this handler to instantiate resources in the external service and ensure that the configuration is valid.
      */
     throw new sdk.RuntimeError('Invalid configuration') // replace this with your own validation logic
   },
   unregister: async () => {
     /**
      * This is called when a bot removes the integration.
-     * You should use this handler to instanciate ressources in the external service and ensure that the configuration is valid.
+     * You should use this handler to instantiate resources in the external service and ensure that the configuration is valid.
      */
     throw new sdk.RuntimeError('Invalid configuration') // replace this with your own validation logic
   },
   actions: {
     facebookAction: async (props) => {
       /**
-       * This is called when a bot calls the action `helloWorld`.
+       * This is called when a bot calls the action `facebookAction`.
        */
       props.logger.forBot().info('Facebook Card') // this log will be visible by the bots that use this integration
 
@@ -29,7 +30,7 @@ export default new bp.Integration({
     },
     instaAction: async (props) => {
       /**
-       * This is called when a bot calls the action `helloWorld`.
+       * This is called when a bot calls the action `instaAction`.
        */
       props.logger.forBot().info('Instagram Card') // this log will be visible by the bots that use this integration
 
@@ -39,7 +40,7 @@ export default new bp.Integration({
     },
     linkedInAction: async (props) => {
       /**
-       * This is called when a bot calls the action `helloWorld`.
+       * This is called when a bot calls the action `linkedInAction`.
        */
       props.logger.forBot().info('LinkedIn Card') // this log will be visible by the bots that use this integration
 
@@ -48,41 +49,28 @@ export default new bp.Integration({
       return { message: `This is your LinkedIn post "${input}"` }
     },
     createFacebookPost: async (props) => {
+      const pageAccessToken = 'YOUR_PAGE_ACCESS_TOKEN'; // Replace with your long-lived Page access token
+      const pageId = 'YOUR_PAGE_ID'; // Replace with your Page ID
+      const { message, mediaUrl } = props.input;
+
       try {
-        const { message, link, scheduledTime } = props.input;
-
-        // Prepare the request payload
-        const payload = {
-          message,
-          link,
-          published: scheduledTime ? false : true,
-        };
-
-        if (scheduledTime) {
-          payload['scheduled_publish_time'] = scheduledTime;
-        }
-
-        // Make the API call to create the post
-        const response = await sdk.http.post(`https://graph.facebook.com/v20.0/${PAGE_ID}/feed`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: payload,
-          params: {
-            access_token: PAGE_ACCESS_TOKEN,
-          },
+        const response = await axios.post(`https://graph.facebook.com/${pageId}/photos`, {
+          url: mediaUrl,
+          caption: message,
+          access_token: pageAccessToken,
         });
 
-        // Return the post ID upon successful creation
-        return { postId: response.data.id };
+        if (response.data) {
+          return { postId: response.data.id };
+        } else {
+          throw new sdk.RuntimeError('Failed to post media on Facebook.');
+        }
       } catch (error) {
-        // Handle any errors that occur during the API call
-        console.error('Error creating Facebook post:', error);
-        throw new sdk.RuntimeError('Failed to create Facebook post');
+        console.error('Error posting to Facebook:', error);
+        throw new sdk.RuntimeError('Error occurred while posting to Facebook.');
       }
     },
   },
-  
   channels: {},
   handler: async () => {},
-})
+});
