@@ -49,18 +49,16 @@ export default new bp.Integration({
       return { message: `This is your LinkedIn post "${input}"` }
     },
     createFacebookPost: async (props) => {
-      const pageAccessToken = 'YOUR_PAGE_ACCESS_TOKEN'; // Replace with your long-lived Page access token
-      const pageId = 'YOUR_PAGE_ID'; // Replace with your Page ID
-      const { message, mediaUrl } = props.input;
-
       try {
+        const { accessToken, pageId } = props.ctx.configuration; // Fetch accessToken and pageId from configuration
+
         const response = await axios.post(`https://graph.facebook.com/${pageId}/photos`, {
-          url: mediaUrl,
-          caption: message,
-          access_token: pageAccessToken,
+          url: props.input.mediaUrl,
+          caption: props.input.message,
+          access_token: accessToken,
         });
 
-        if (response.data) {
+        if (response.data && response.data.id) {
           return { postId: response.data.id };
         } else {
           throw new sdk.RuntimeError('Failed to post media on Facebook.');

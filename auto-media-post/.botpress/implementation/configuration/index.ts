@@ -6,5 +6,6 @@
  */
 
 export interface Configuration {
-  [k: string]: any;
+  accessToken: string;
+  pageId: string;
 }

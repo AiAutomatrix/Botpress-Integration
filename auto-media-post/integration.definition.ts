@@ -9,8 +9,8 @@ export default new IntegrationDefinition({
    // This is where we define the configuration schema for our integration.
    configuration: {
     schema: z.object({
-        accessToken: z.string(), // Defines that apiKey should be a string.
-        pageId: z.string(), // Defines that teamId should be a string.
+        accessToken: z.string(),
+        pageId: z.string(), // Defines that pageId should be a string.
     })
 },
   actions: {
@@ -57,7 +57,7 @@ export default new IntegrationDefinition({
       },
     },
     createFacebookPost: {
-      title: 'Facebook Media Post',
+      title: 'Facebook Post',
       description: 'Create a media post on Facebook Page using access tokens',
       input: {
         schema: z.object({
